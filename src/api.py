@@ -4,11 +4,21 @@ from functools import wraps
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
-from flask import Flask, request, jsonify, make_response,send_file
+from flask import Flask, redirect, request, jsonify, make_response,send_file, send_from_directory
 from flask_cors import cross_origin
 from oryza import OryzaAPI
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
+
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={'app_name': "Aclimate Oryza Web API"}
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 # Decorator which validates request to API should be logged
 def token_required(f):
@@ -38,13 +48,17 @@ def token_required(f):
 
     return decorator
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
-    return '<h1>Running Oryza Web API</h1>'
+    return redirect("/swagger")
+
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static',path)
 
 @app.route('/api/v1/login', methods=['POST'])
 @cross_origin()
-def login_user(): 
+def login_user():
     auth = request.get_json()
     if not auth or not auth.get("user") or not auth.get("password"):
         return make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})
