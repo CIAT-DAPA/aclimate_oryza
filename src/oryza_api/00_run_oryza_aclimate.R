@@ -93,7 +93,8 @@ dir_run %>% map(~file.copy(list.files(".", pattern = ".EXE$", full.names = T), .
 
 
 #tictoc::tic()
-ncores <- detectCores()/2
+#ncores <- detectCores()/2
+ncores <- 4
 registerDoParallel(ncores)
 
 
