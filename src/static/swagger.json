@@ -27,10 +27,15 @@
     "paths": {
         "/api/v1/login": {
             "post": {
-                "tags": [ "login" ],
+                "tags": [
+                    "login"
+                ],
                 "summary": "Logs user into the system",
+                "produces": [
+                    "application/json"
+                ],
                 "requestBody": {
-                    "description": "Endpoint which allow to users authenticate into the server",
+                    "description": "User and password of user",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -40,49 +45,60 @@
                         }
                     }
                 },
-                "produces": [
-                    "application/json"
-                ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "OK",
                         "schema": {
                             "$ref": "#/components/schemas/token"
                         }
                     },
-                    "400": {
-                        "description": "Failed. Bad post data."
+                    "401": {
+                        "description": "Failed. Bad post data. Could not verify"
                     }
                 }
             }
         },
         "/api/v1/run": {
             "post": {
-                "tags": [ "run" ],
-                "summary": "Run Oryza model",
+                "tags": [
+                    "run"
+                ],
+                "summary": "Endpoint which allow to users run Oryza model",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "Your access token. It is the token value return in the login",
+                        "required": "true",
+                        "type": "string"
+                    }
+                ],
                 "requestBody": {
-                    "description": "Endpoint which allow to users execute oryza",
+                    "description": "Zip file with all scenarios and parameters for Oryza",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/auth"
+                                "$ref": "#/components/schemas/inputs"
                             }
                         }
                     }
                 },
                 "produces": [
-                    "application/json"
+                    "text/csv"
                 ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/components/schemas/token"
+                            "$ref": "#/components/schemas/output"
                         }
                     },
                     "400": {
                         "description": "Failed. Bad post data."
+                    },
+                    "500": {
+                        "description": "Server failed. Error during execution."
                     }
                 }
             }
@@ -92,6 +108,10 @@
         "schemas": {
             "auth": {
                 "type": "object",
+                "required": [
+                    "user",
+                    "password"
+                ],
                 "properties": {
                     "user": {
                         "type": "string"
@@ -109,16 +129,77 @@
                     }
                 }
             },
-            "runResponse": {
+            "inputs": {
+                "type": "object",
+                "required": [
+                    "inputs"
+                ],
+                "properties": {
+                    "inputs": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "output": {
                 "type": "object",
                 "properties": {
-                    "title": {
-                        "type": "string",
-                        "format": "string"
+                    "weather_station": {
+                        "type": "string"
                     },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
+                    "soil": {
+                        "type": "string"
+                    },
+                    "cultivar": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string"
+                    },
+                    "end": {
+                        "type": "string"
+                    },
+                    "measure": {
+                        "type": "string"
+                    },
+                    "avg": {
+                        "type": "string"
+                    },
+                    "median": {
+                        "type": "string"
+                    },
+                    "min": {
+                        "type": "string"
+                    },
+                    "max": {
+                        "type": "string"
+                    },
+                    "quar_1": {
+                        "type": "string"
+                    },
+                    "quar_2": {
+                        "type": "string"
+                    },
+                    "quar_3": {
+                        "type": "string"
+                    },
+                    "conf_lower": {
+                        "type": "string"
+                    },
+                    "conf_upper": {
+                        "type": "string"
+                    },
+                    "sd": {
+                        "type": "string"
+                    },
+                    "perc_5": {
+                        "type": "string"
+                    },
+                    "perc_95": {
+                        "type": "string"
+                    },
+                    "coef_va": {
+                        "type": "string"
                     }
                 }
             }
