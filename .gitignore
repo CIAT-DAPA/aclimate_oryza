@@ -1,5 +1,6 @@
 /service
 /workspace
+/src/workspace
 */__pycache__
 
 secrets.txt

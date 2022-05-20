@@ -35,3 +35,11 @@ set SECRET_KEY=Loc@lS3cr3t
 * PORT: Port in which services should be execute
 * R_COMMAND: Path where R command is located
 
+## Run
+
+To execute in background
+
+```
+pip install waitress
+pythonw api.py > log.txt 2>&1
+```

@@ -7,7 +7,7 @@ if os.getenv('DEBUG', "true").lower() == "true":
     config['CURRENT_USER']='forecast'
     config['CURRENT_PWD']='My11v3S3cret4'
     config['DEBUG']=True
-    config['ROOT_PATH']="D:\\CIAT\\Code\\USAID\\aclimate_oryza"
+    config['ROOT_PATH']="D:\\CIAT\\Code\\USAID\\aclimate_oryza\\src"
     config['HOST']='localhost'
     config['PORT']=5000
     config['R_COMMAND']="C:\\Users\\hsotelo\\AppData\\Local\\Programs\\R\\R-4.2.0\\bin\\Rscript.exe"
