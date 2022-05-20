@@ -46,7 +46,7 @@ class OryzaAPI(object):
         print("Working in:",env)
 
         # Copy library to workspace
-        shutil.copytree(os.path.join(self.root,"src","oryza_api"),os.path.join(env,"oryza_api"))
+        shutil.copytree(os.path.join(self.root,"oryza_api"),os.path.join(env,"oryza_api"))
 
         # Uncomprssing zip
         print("Uncompressing inputs data",id)
