@@ -33,7 +33,7 @@ class OryzaAPI(object):
         path = os.path.join(path,now.strftime("%Y%m%d"))
         self.mkdir(path)
         # Create folder for execution
-        now = str(round(datetime.timestamp(now)))
+        now = str(datetime.timestamp(now))
         path = os.path.join(path,now)
         self.mkdir(path)
         return (now,path)
