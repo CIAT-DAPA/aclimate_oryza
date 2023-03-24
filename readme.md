@@ -25,6 +25,7 @@ The system requires set enviroments vars. For setting env vars you use:
 
 ```
 set SECRET_KEY=Loc@lS3cr3t
+
 ```
 
 * DEBUG: Set if you are debbuging or production enviroment
@@ -42,4 +43,11 @@ To execute in background
 ```
 pip install waitress
 pythonw api.py > log.txt 2>&1
+```
+
+To stop 
+
+```
+netstat -ano
+taskkill /PID <PROCESS ID> /F
 ```
